@@ -15,4 +15,8 @@ public class Controladora {
     public List<Usuario> traerUsuarios() {
         return controladoraPersistencia.traerUsuarios();
     }
+
+    public void borrarUsuario(int idEliminar) {
+        controladoraPersistencia.borrarUsuario(idEliminar);
+    }
 }
