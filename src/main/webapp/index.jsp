@@ -26,6 +26,8 @@
 
         <h1>Eliminar Usuario.</h1>
         <p>Ingrese el id del usuario a eliminar: </p>
+
+        <!--utilizamos el servlet de SvEliminar  -->
         <form action="SvEliminar" method="post">
             <p><label>Id: </label> <input type="type" name="id_usuario"></p>
             <button type="submit"> Eliminar Usuario</button>

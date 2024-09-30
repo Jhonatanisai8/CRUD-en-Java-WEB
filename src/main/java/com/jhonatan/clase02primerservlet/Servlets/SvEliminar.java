@@ -2,7 +2,6 @@ package com.jhonatan.clase02primerservlet.Servlets;
 
 import com.jhonatan.clase02primerservlet.Logica.Controladora;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +27,10 @@ public class SvEliminar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        //obtenemos el id con el metodo getParameter(parametroF);
         int idEliminar = Integer.parseInt(request.getParameter("id_usuario"));
+        //llamamos al metodo borrar de la clase controladora
         controladora.borrarUsuario(idEliminar);
     }
 
