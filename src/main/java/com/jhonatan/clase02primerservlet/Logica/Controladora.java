@@ -19,4 +19,12 @@ public class Controladora {
     public void borrarUsuario(int idEliminar) {
         controladoraPersistencia.borrarUsuario(idEliminar);
     }
+
+    public Usuario traerUsuario(int idEditar) {
+        return controladoraPersistencia.traerUsuario(idEditar);
+    }
+
+    public void editarUsuario(Usuario usuario) throws Exception {
+        controladoraPersistencia.editarUsuario(usuario);
+    }
 }

@@ -1,10 +1,14 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package com.jhonatan.clase02primerservlet.Servlets;
 
 import com.jhonatan.clase02primerservlet.Logica.Controladora;
 import com.jhonatan.clase02primerservlet.Logica.Usuario;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,43 +16,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/*
-Método getParameter :
-se utilixa del lado del servlet  para obtener el valor de un parametro enviado por el cliente
-via los metodos doGet o doPost
-EJEMPLO:
-String dato = request.getParametrer("txtNombre");
- */
-@WebServlet(name = "SvUsuarios", urlPatterns = {"/SvUsuarios"})
-public class SvUsuarios extends HttpServlet {
+@WebServlet(name = "SvEditar", urlPatterns = {"/SvEditar"})
+public class SvEditar extends HttpServlet {
 
-    //instancia de la clase controladora
-    Controladora controladora = new Controladora();
+    Controladora control = new Controladora();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
     }
 
-    /*METODOS DO GET Y DO POST SE GENERAN AUTOMATICAMENTE*/
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
 
-        List<Usuario> listaUsuarios = new ArrayList<>();
-        //llamamos a un metodo de la clase controladora
-        listaUsuarios = controladora.traerUsuarios();
+        //obtenemos el id
+        int idEditar = Integer.parseInt(request.getParameter("id_usuarioEditar"));
+        Usuario usuario = control.traerUsuario(idEditar);
 
-        //obtenemos la sesion 
-        HttpSession miSession = request.getSession();
+        HttpSession miSesion = request.getSession();
+        miSesion.setAttribute("usuEditar", usuario);
 
-        //le seteamos el atributo listaUsuarios
-        miSession.setAttribute("listaUsuarios", listaUsuarios);
+        //redirigimoss 
+        response.sendRedirect("editar.jsp");
 
-        //generamos la respuesta
-        response.sendRedirect("mostrarUsuarios.jsp");
     }
 
     @Override
@@ -61,21 +51,27 @@ public class SvUsuarios extends HttpServlet {
         String apellido = request.getParameter("apellido");
         String telefono = request.getParameter("telefono");
 
-        //creamos el usuaurio y seteamos los datos
-        Usuario usuario = new Usuario();
+        //traemos el usuario
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuEditar");
+
+        //modificmos los valors
         usuario.setDni(dni);
         usuario.setApellido(apellido);
         usuario.setNombre(nombre);
         usuario.setTelefono(telefono);
 
-        //llamamos al metodo
-        controladora.crearUsuario(usuario);
+        try {
+            //llamamos al metodo
+            control.editarUsuario(usuario);
+        } catch (Exception ex) {
+            Logger.getLogger(SvEditar.class.getName()).log(Level.SEVERE, null, ex);
+        }
         response.sendRedirect("index.jsp");
-
     }
 
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
+
 }

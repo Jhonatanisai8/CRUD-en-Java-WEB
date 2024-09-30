@@ -5,24 +5,33 @@ import com.jhonatan.clase02primerservlet.Persistencia.exceptions.NonexistentEnti
 import java.util.List;
 
 public class ControladoraPersistencia {
-
+    
     UsuarioJpaController usuarioJpaController = new UsuarioJpaController();
 
     //metodos
     public void crearUsuario(Usuario usuario) {
         usuarioJpaController.create(usuario);
     }
-
+    
     public List<Usuario> traerUsuarios() {
         //nos trae todos los usuario de la bd
         return usuarioJpaController.findUsuarioEntities();
     }
-
+    
     public void borrarUsuario(int idEliminar) {
         try {
             usuarioJpaController.destroy(idEliminar);
         } catch (NonexistentEntityException e) {
             System.out.println("Error al eliminar: " + e.getMessage());
         }
+    }
+    
+    public Usuario traerUsuario(int idEditar) {
+        //llamamos el metodo de la controladorasuario
+        return usuarioJpaController.findUsuario(idEditar);
+    }
+    
+    public void editarUsuario(Usuario usuario) throws Exception {
+        usuarioJpaController.edit(usuario);
     }
 }

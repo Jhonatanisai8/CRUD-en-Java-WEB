@@ -32,6 +32,16 @@
             <p><label>Id: </label> <input type="type" name="id_usuario"></p>
             <button type="submit"> Eliminar Usuario</button>
         </form>
+
+        <h1>Editar Usuario.</h1>
+        <p>Ingrese el id del usuario a editar</p>
+
+        <!--utilizamos el servlet de SvEditar  -->
+        <form action="SvEditar" method="get">
+            <p><label>Id: </label> <input type="type" name="id_usuarioEditar"></p>
+            <button type="submit"> Editar Usuario</button>
+        </form>
+
     </body>
 
 </html>
